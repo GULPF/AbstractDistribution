@@ -5,23 +5,24 @@ run in a parallelized mode (streams) or a distributed mode (Spark).
 Choosing parallelized or distributed
 ----------------
 Running in parallelized mode
-
+```java
     IApiProvider api = new StreamApiProvider();
     new Algorithm().run(api "/path/to/local/file");
+```
 
 Running in distributed mode.
-
+```java
     SparkConf conf = new SparkConf().setAppName("Spark Demo");
     JavaSparkContext sc = new JavaSparkContext(conf);
     IApiProvider api = new SparkApiProvider(sc);
     new Algorithm().run(api "hdfs:///path/to/distributed/file");
-
+```
 Using the dataset
 ----------------
 
 Calculating chess win ratios from a dataset of .pgn files (f.ex, https://github.com/rozim/ChessData).
 
-
+```java
     public class Algorithm implements Serializable {
         private enum Winner {Black, White, Draw, Invalid}
 
@@ -42,9 +43,10 @@ Calculating chess win ratios from a dataset of .pgn files (f.ex, https://github.
             results.collect().forEach(System.out::println);
         }
     }
+```
 
 Or, with accumulators.
-
+```java
     public class Algorithm implements Serializable {
         private enum Winner {Black, White, Draw, Invalid}
 
@@ -71,3 +73,4 @@ Or, with accumulators.
             System.out.println("invalid: " + invalid.get());
         }
     }
+```
